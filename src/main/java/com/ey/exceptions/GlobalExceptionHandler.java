@@ -10,6 +10,7 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.sun.mail.util.MailConnectException;
@@ -105,6 +106,16 @@ public class GlobalExceptionHandler {
         exceptionEntity.setSubErrors(exceptionentitySubErrorList);
         return new ResponseEntity<ExceptionEntity>(exceptionEntity, HttpStatus.REQUEST_TIMEOUT);
 
+    }
+    
+    @ExceptionHandler(UserNameNotFoundException.class)
+    public ResponseEntity<ExceptionEntity> emailNotFoundException(UsernameNotFoundException e){
+    	ExceptionEntity exentity = new ExceptionEntity();
+    	exentity.setMessage(e.getMessage());
+    	exentity.setTimestamp(LocalDateTime.now());
+    	exentity.setErrorcode(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<ExceptionEntity>(exentity,HttpStatus.NOT_FOUND);
+    	
     }
 
 }

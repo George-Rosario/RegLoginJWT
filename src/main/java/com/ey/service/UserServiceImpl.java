@@ -20,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ey.dto.ApplicationUserDTO;
 import com.ey.exceptions.EmailExistsException;
 import com.ey.model.ApplicationUser;
+import com.ey.model.PasswordResetToken;
 import com.ey.model.VerificationToken;
+import com.ey.repository.PasswordResetTokenRepository;
 import com.ey.repository.TokenRepository;
 import com.ey.repository.UserRepository;
 
@@ -38,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	TokenRepository tokenRepository;
+	
+	@Autowired
+	PasswordResetTokenRepository passwordResetTokenRepository;
 
 	@Autowired
 	private JavaMailSender sender;
@@ -149,6 +154,49 @@ public class UserServiceImpl implements UserService {
 	public int updateUser(ApplicationUser user) {
 		return userrepo.setEnabledStatus(true, user.getUserName());
 
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ey.service.UserService#findUserByUserName(java.lang.String)
+	 */
+	@Override
+	public ApplicationUser findUserByUserName(String userEmail) {
+		return userrepo.findByUserName(userEmail);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ey.service.UserService#createPasswordResetTokenForUser(com.ey.model.ApplicationUser, java.util.Locale, java.lang.String)
+	 */
+	@Override
+	public void createPasswordResetTokenForUser(ApplicationUser user, Locale locale, String path) throws MessagingException {
+		String token = UUID.randomUUID().toString();
+		createPasswordResetToken(user, token);
+		String recipientAddress = user.getUserName();
+		String subject = "Reset Password Email";
+		String confirmationUrl = "http://" + path + "/user/resetPasswordConfirm?token=" + token;
+
+		MimeMessage mimeMessages = sender.createMimeMessage();
+		String msg = "<body style='border:2px solid black'>" + "Your  Reset link  "
+				+ "Please use this link to complete your new reset process."
+				+ "link is confidential, do not share this  with anyone."
+				+ "<a href=\"" + confirmationUrl + "\">CLICK HERE</a>" + "</body>";
+
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessages, false, "utf-8");
+		mimeMessages.setContent(msg, "text/html");
+		helper.setTo(recipientAddress);
+		helper.setSubject(subject);
+		sender.send(mimeMessages);
+	}
+
+	
+	/**
+	 * @param user
+	 * @param token
+	 */
+	private void createPasswordResetToken(ApplicationUser user, String token) {
+		PasswordResetToken passwordResetToken = new PasswordResetToken(token, user);
+		passwordResetTokenRepository.save(passwordResetToken);
+		
 	}
 
 }

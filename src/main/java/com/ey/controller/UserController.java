@@ -31,6 +31,7 @@ import com.ey.dto.ApplicationUserDTO;
 import com.ey.exceptions.EmailExistsException;
 import com.ey.exceptions.RegistrationInvalidToken;
 import com.ey.exceptions.RegistrationTokenExpiredException;
+import com.ey.exceptions.UserNameNotFoundException;
 import com.ey.model.ApplicationUser;
 import com.ey.model.VerificationToken;
 import com.ey.service.UserService;
@@ -98,4 +99,21 @@ public class UserController {
         
     }
 
+    @PostMapping("/resetPassword")
+    public ResponseEntity<ApplicationUser> resetPassword(HttpServletRequest request, 
+    		  @RequestParam("email") String userEmail) throws UserNameNotFoundException, MessagingException{
+    	String path= "localhost:8080"+request.getContextPath();
+    	ApplicationUser user = userService.findUserByUserName(userEmail);
+    	if(user==null) {
+    		throw new UserNameNotFoundException("The User not found in Application"+userEmail);
+    	}
+    	
+    	if(user!=null) {
+            this.userService.createPasswordResetTokenForUser(user,request.getLocale(),path);
+        }
+    	
+    	
+    	
+    	return null;
+    }
 }

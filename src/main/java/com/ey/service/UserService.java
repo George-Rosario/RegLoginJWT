@@ -14,6 +14,14 @@ import com.ey.model.VerificationToken;
  * @author George.Rosario
  *
  */
+/**
+ * @author George.Rosario
+ *
+ */
+/**
+ * @author George.Rosario
+ *
+ */
 public interface UserService {
 
     /**
@@ -42,5 +50,20 @@ public interface UserService {
      * @param user
      */
     int updateUser(ApplicationUser user);
+
+    
+	/**
+	 * @param userEmail
+	 * @return
+	 */
+	ApplicationUser findUserByUserName(String userEmail);
+
+	/**
+	 * @param user
+	 * @param locale
+	 * @param path
+	 * @throws MessagingException 
+	 */
+	void createPasswordResetTokenForUser(ApplicationUser user, Locale locale, String path) throws MessagingException;
 
 }
