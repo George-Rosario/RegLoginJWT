@@ -8,16 +8,9 @@ import javax.validation.ConstraintViolationException;
 import com.ey.dto.ApplicationUserDTO;
 import com.ey.exceptions.EmailExistsException;
 import com.ey.model.ApplicationUser;
+import com.ey.model.PasswordResetToken;
 import com.ey.model.VerificationToken;
 
-/**
- * @author George.Rosario
- *
- */
-/**
- * @author George.Rosario
- *
- */
 /**
  * @author George.Rosario
  *
@@ -65,5 +58,12 @@ public interface UserService {
 	 * @throws MessagingException 
 	 */
 	void createPasswordResetTokenForUser(ApplicationUser user, Locale locale, String path) throws MessagingException;
+
+	
+	/**
+	 * @param token
+	 * @return
+	 */
+	PasswordResetToken getPassWordRestToken(String token);
 
 }

@@ -4,7 +4,7 @@ package com.ey.exceptions;
  * @author George.Rosario
  *
  */
-public class RegistrationInvalidToken extends Exception {
+public class InvalidToken extends Exception {
     /**
      * 
      */
@@ -19,12 +19,12 @@ public class RegistrationInvalidToken extends Exception {
         this.messages = messages;
     }
 
-    public RegistrationInvalidToken(String messages) {
+    public InvalidToken(String messages) {
         super();
         this.messages = messages;
     }
     
-    public RegistrationInvalidToken() {
+    public InvalidToken() {
         super();
     }
     

@@ -199,4 +199,9 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public PasswordResetToken getPassWordRestToken(String token) {
+		return passwordResetTokenRepository.findByToken(token);
+	}
+
 }

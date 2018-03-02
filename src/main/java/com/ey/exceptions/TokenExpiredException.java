@@ -4,7 +4,7 @@ package com.ey.exceptions;
  * @author George.Rosario
  *
  */
-public class RegistrationTokenExpiredException extends Exception {
+public class TokenExpiredException extends Exception {
     
     /**
      * 
@@ -15,7 +15,7 @@ public class RegistrationTokenExpiredException extends Exception {
     public String getMessages() {
         return messages;
     }
-    public RegistrationTokenExpiredException(String messages) {
+    public TokenExpiredException(String messages) {
         super();
         this.messages = messages;
     }
@@ -23,7 +23,7 @@ public class RegistrationTokenExpiredException extends Exception {
         this.messages = messages;
     }
     
-    public RegistrationTokenExpiredException() {
+    public TokenExpiredException() {
         super();
     }
     

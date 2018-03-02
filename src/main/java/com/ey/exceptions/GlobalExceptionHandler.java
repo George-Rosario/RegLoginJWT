@@ -65,8 +65,8 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(RegistrationInvalidToken.class)
-    public ResponseEntity<ExceptionEntity> registrationInvalidTokenSentException(RegistrationInvalidToken e) {
+    @ExceptionHandler(InvalidToken.class)
+    public ResponseEntity<ExceptionEntity> invalidTokenSentException(InvalidToken e) {
         ExceptionEntity exceptionEntity = new ExceptionEntity();
         exceptionEntity.setErrorcode(HttpStatus.UNAUTHORIZED);
         exceptionEntity.setMessage(e.getMessages());
@@ -75,8 +75,8 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(RegistrationTokenExpiredException.class)
-    public ResponseEntity<ExceptionEntity> registraionTokenExpiredException(RegistrationTokenExpiredException e) {
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ExceptionEntity> registraionTokenExpiredException(TokenExpiredException e) {
         ExceptionEntity exceptionEntity = new ExceptionEntity();
         exceptionEntity.setErrorcode(HttpStatus.UNAUTHORIZED);
         exceptionEntity.setMessage(e.getMessages());

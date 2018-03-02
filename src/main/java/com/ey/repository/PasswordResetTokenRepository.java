@@ -6,6 +6,6 @@ import com.ey.model.PasswordResetToken;
 
 public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, Long> {
     
-	PasswordResetTokenRepository findByToken(String token);
+	PasswordResetToken findByToken(String token);
 
 }

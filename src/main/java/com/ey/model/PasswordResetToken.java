@@ -56,6 +56,10 @@ public class PasswordResetToken {
 		return user;
 	}
 
+	public PasswordResetToken() {
+		super();
+	}
+	
 	public PasswordResetToken(String token, ApplicationUser user) {
 		super();
 		this.token = token;
