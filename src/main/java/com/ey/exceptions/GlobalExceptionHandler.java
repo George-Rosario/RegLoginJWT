@@ -13,6 +13,8 @@ import org.springframework.mail.MailSendException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import com.sun.mail.util.MailConnectException;
 
 /**
@@ -20,12 +22,12 @@ import com.sun.mail.util.MailConnectException;
  *
  */
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     ResponseEntity<ExceptionEntity> handleConstraintViolation(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-        ExceptionEntity exceptionEntity = new ExceptionEntity();
+        ExceptionEntity exceptionEntity = new ExceptionEntity();					
 
         for (ConstraintViolation<?> constraintViolation : constraintViolations) {
             exceptionEntity.setMessage(constraintViolation.getMessage());

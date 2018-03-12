@@ -1,6 +1,7 @@
 
 package com.ey.controller;
 
+import java.net.URI;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ey.dto.ApplicationUserDTO;
 import com.ey.exceptions.EmailExistsException;
@@ -68,6 +70,11 @@ public class UserController {
 		}
 
 		return new ResponseEntity<ApplicationUser>(user, HttpStatus.OK);
+		
+		/* URI location=ServletUriComponentsBuilder
+		 * .fromCurrentRequest().path("/{id}")
+		 * .buildAndExpand(user.getUserId()).toUri();
+		return ResponseEntity.created(location).build();*/
 
 	}
 
